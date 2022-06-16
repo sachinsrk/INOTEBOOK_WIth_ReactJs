@@ -17,7 +17,7 @@ router.post( "/createuser",
     body("password","password can not be null or less than 5 charcter").isLength({ min: 5 }),
   ],
  async (req, res) => {
-
+    let success = false;
     //if there are error return bad request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -47,9 +47,10 @@ router.post( "/createuser",
             }
           }
           //JWT  METHOD
+          success= true;
           const authToken = jwt.sign(data, JWT_Secret);
           //sending response
-          res.json({authToken})
+          res.json({success,authToken})
           // const user = User(req.body);
           // user.save();
     }catch(error){
@@ -67,7 +68,7 @@ router.post( "/login",
     body("password","password can not be null").exists(),
   ],
   async (req, res) => {
-
+   let success=false;
     //if there are error return bad request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -84,6 +85,7 @@ router.post( "/login",
       const passwordComp = await bcrypt.compare(password, user.password)
       if(!passwordComp){
         return res.status(400).json({error:"Please try to login with correct credentials"});
+        
       }
 
       const data={
@@ -94,7 +96,8 @@ router.post( "/login",
       //JWT  METHOD
       const authToken = jwt.sign(data, JWT_Secret);
       //sending response
-      res.json({authToken})
+      success=true;
+      res.json({success,authToken})
       
     } catch (error) {
       console.error(error.message);

@@ -13,7 +13,7 @@ const NoteState = (props) => {
          const response = await fetch(`${host}/api/note/fetchallnotes`, {
             method: 'GET',
             headers: {
-                'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJhNmU4YTBkYmVkZTU2MzNjMzY5ZDkzIn0sImlhdCI6MTY1NTExMTkxNH0.lE6hpnl_7HD9gVR0iBXyNpA1ZYmeeFoKvODPTzkv6RQ'
+                'auth-token':localStorage.getItem('token')
             }
         });
         const json = await response.json()
@@ -34,7 +34,7 @@ const NoteState = (props) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJhNmU4YTBkYmVkZTU2MzNjMzY5ZDkzIn0sImlhdCI6MTY1NTExMTkxNH0.lE6hpnl_7HD9gVR0iBXyNpA1ZYmeeFoKvODPTzkv6RQ'
+                'auth-token':localStorage.getItem('token')
             },
             body: JSON.stringify(data)
         });
@@ -51,12 +51,13 @@ const NoteState = (props) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJhNmU4YTBkYmVkZTU2MzNjMzY5ZDkzIn0sImlhdCI6MTY1NTExMTkxNH0.lE6hpnl_7HD9gVR0iBXyNpA1ZYmeeFoKvODPTzkv6RQ'
+                'auth-token':localStorage.getItem('token')
             }
         });
 
         const newNotes = notes.filter((note) => { return note._id !== id })
         setNotes(newNotes)
+       
     }
 
     //Edit Note
@@ -67,7 +68,7 @@ const NoteState = (props) => {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjJhNmU4YTBkYmVkZTU2MzNjMzY5ZDkzIn0sImlhdCI6MTY1NTExMTkxNH0.lE6hpnl_7HD9gVR0iBXyNpA1ZYmeeFoKvODPTzkv6RQ'
+                'auth-token':localStorage.getItem('token')
             },
             body: JSON.stringify({title,description,tag})
         });
